@@ -1,7 +1,12 @@
 # go-web
 
 ## Framework
+
 Golang Web Framework: Gin
+
+## Config
+
+`GOPROXY=https://goproxy.cn`
 
 ## Api
 
