@@ -15,6 +15,13 @@ Golang Web Framework: Gin
 [GIN-debug] GET    /sd/cpu                   --> go-web/src/handler/sd.CPUCheck (5 handlers)  
 [GIN-debug] GET    /sd/ram                   --> go-web/src/handler/sd.RAMCheck (5 handlers)  
 
+## Error
+```shell script
+curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8888/v1/user
+curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8888/v1/user -d'{"username":"admin"}'
+curl -XPOST -H "Content-Type: application/json" http://127.0.0.1:8080/v1/user -d'{"password":"admin"}'
+```
+
 ## DB
 ```sql
 CREATE DATABASE /*!32312 IF NOT EXISTS*/ `user` /*!40100 DEFAULT CHARACTER SET utf8 */;
