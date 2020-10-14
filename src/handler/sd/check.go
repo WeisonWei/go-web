@@ -2,7 +2,10 @@ package sd
 
 import (
 	"fmt"
+	"github.com/spf13/viper"
+	"log"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/shirou/gopsutil/cpu"
@@ -96,4 +99,21 @@ func RAMCheck(c *gin.Context) {
 
 	message := fmt.Sprintf("%s - Free space: %dMB (%dGB) / %dMB (%dGB) | Used: %d%%", text, usedMB, usedGB, totalMB, totalGB, usedPercent)
 	c.String(status, "\n"+message)
+}
+
+func Ping(c *gin.Context) {
+	status := http.StatusOK
+
+	maxPingCount := viper.GetInt("max_ping_count")
+	url := viper.GetString("url")
+	for i := 0; i < maxPingCount; i++ {
+		resp, err := http.Get(url + "/sd/health")
+		if err == nil && resp.StatusCode == 200 {
+			return
+		}
+		//sleep for a second to continue the next ping
+		log.Println("waiting for the router,retry in 1 second.")
+		time.Sleep(time.Second)
+	}
+	c.String(status, "\n"+"\"cannot connect the router\"")
 }
